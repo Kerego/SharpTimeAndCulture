@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace SharpTimeAndCulture
 {
-	public class MainViewModel : BindingBase, IDisposable
+	public class MainViewModel : BindingBase
 	{
 		public string RemoteTime
 		{
@@ -60,11 +60,6 @@ namespace SharpTimeAndCulture
 		public void ZoneChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var timeZone = e.AddedItems.First() as TimeZoneInfo;
-		}
-
-		public void Dispose()
-		{
-			PropertyChanged = null;
 		}
 	}
 }
