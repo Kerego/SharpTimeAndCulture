@@ -1,13 +1,58 @@
 ﻿<Page
-    x:Class="SharpTimeAndCulture.MainPage"
+	x:Class="SharpTimeAndCulture.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SharpTimeAndCulture"
+    xmlns:local="using:SharpPatterns"
+	xmlns:sys ="using:System"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
-    </Grid>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<TimePicker Time="{x:Bind vm.LocalTime, Mode=TwoWay}" Header="Local Time" HorizontalAlignment="Center" ClockIdentifier="24HourClock"></TimePicker>
+			<TextBlock Text="{x:Bind vm.RemoteTime, Mode=OneWay}" Grid.Row="1" HorizontalAlignment="Center" ></TextBlock>
+		</Grid>
+
+		<ListView	ItemsSource="{x:Bind vm.TimeZones}" 
+					Name="ZoneList"
+					Grid.Column="1"
+					SelectedItem="{Binding SelectedZone, Mode=TwoWay}"
+					SelectionChanged="{x:Bind vm.ZoneChanged}"
+					SelectionMode="Single">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+					<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+				</Style>
+			</ListView.ItemContainerStyle>
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="sys:TimeZoneInfo">
+					<Grid Padding="5" Margin="1" Background="DarkTurquoise">
+
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Text="{x:Bind DisplayName}"></TextBlock>
+						<TextBlock Grid.Row ="1"
+								   Text="{x:Bind StandardName}"></TextBlock>
+
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+	</Grid>
 </Page>
